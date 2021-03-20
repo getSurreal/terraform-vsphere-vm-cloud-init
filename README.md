@@ -1,5 +1,5 @@
 # terraform-vsphere-vm-cloud-init
 
-Deploy cloud images using cloud-init with userdata.
+Deploy cloud images to vCenter using cloud-init userdata.
 
-This module is designed to work with the OVF version of [Ubuntu Cloud Images](https://cloud-images.ubuntu.com/)
+This module is designed to work with the OVA versions of [Ubuntu Cloud Images](https://cloud-images.ubuntu.com/)
