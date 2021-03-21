@@ -15,15 +15,15 @@ The common vSphere customiztions conflict with vApp deployments and are not used
 ```hcl
   additional_disks = {
     disk1 = {
-      size_gb                   = 10,
-      thin_provisioned          = false,
-      eagerly_scrub             = true
-      datastore_id              = "datastore-20273"
+      size_gb          = 10,
+      thin_provisioned = false,
+      eagerly_scrub    = true
+      datastore_id     = "datastore-20273"
     },
     disk2 = {
-      size_gb                   = 10,
-      thin_provisioned          = true,
-      eagerly_scrub             = true
+      size_gb          = 10,
+      thin_provisioned = true,
+      eagerly_scrub    = true
     }
   }
 ```
