@@ -10,6 +10,24 @@ This module is designed to work with the OVA versions of [Ubuntu Cloud Images](h
 
 The common vSphere customiztions conflict with vApp deployments and are not used.  vApp customiztions are used to pass configuration to the VM.
 
+## Additional Disks Example
+
+```hcl
+  additional_disks = {
+    disk1 = {
+      size_gb                   = 10,
+      thin_provisioned          = false,
+      eagerly_scrub             = true
+      datastore_id              = "datastore-20273"
+    },
+    disk2 = {
+      size_gb                   = 10,
+      thin_provisioned          = true,
+      eagerly_scrub             = true
+    }
+  }
+```
+
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
 

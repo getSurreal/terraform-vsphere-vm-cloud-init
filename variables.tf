@@ -98,3 +98,15 @@ variable "scsi_type" {
   type        = string
   default     = ""
 }
+
+variable "additinal_disks" {
+  description = "Additional disks."
+  type        = map(map(string))
+  default     = {}
+}
+
+variable "template_disk_sizes" {
+  description = "List of disk sizes to override for the template disks."
+  type        = list(number)
+  default     = null
+}

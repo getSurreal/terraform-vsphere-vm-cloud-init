@@ -45,11 +45,29 @@ resource "vsphere_virtual_machine" "vm" {
     adapter_type = var.network_type != null ? var.network_type : data.vsphere_virtual_machine.template.network_interface_types[0]
   }
 
-  disk {
-    label            = "disk0"
-    size             = data.vsphere_virtual_machine.template.disks.0.size
-    eagerly_scrub    = data.vsphere_virtual_machine.template.disks.0.eagerly_scrub
-    thin_provisioned = data.vsphere_virtual_machine.template.disks.0.thin_provisioned
+  // Template disks
+  dynamic "disk" {
+    for_each = data.vsphere_virtual_machine.template.disks
+    iterator = template_disks
+    content {
+      label            = "disk${count.index}"
+      size             = var.disk_size_gb != null ? var.disk_size_gb[template_disks.key] : data.vsphere_virtual_machine.template.disks[template_disks.key].size
+      thin_provisioned = var.thin_provisoned ? var.thin_provisioned : data.vsphere_virtual_machine.template.disks[template_disks.key].thin_provisioned
+      eagerly_scrub    = var.eagerly_scrib ? var.eagerly_scrub : data.vsphere_virtual_machine.template.disks[template_disks.key].eagerly_scrub
+    }
+  }
+
+  // Additional disks
+  dynamic "disk" {
+    for_each = var.additional_disks
+    iterator = additional_disks
+    content {
+      label            = additional_disks.key
+      size             = lookup(additional_disks.value, "size_gb", null)
+      thin_provisioned = lookup(additional_disks.value, "thin_provisioned", "true")
+      eagerly_scrub    = lookup(additional_disks.value, "eagerly_scrub", "false")
+      datastore_id     = lookup(additional_disks.value, "datastore_id", null)
+    }
   }
 
   cdrom {
