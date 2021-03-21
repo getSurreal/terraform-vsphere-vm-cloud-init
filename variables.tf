@@ -105,7 +105,7 @@ variable "additinal_disks" {
   default     = {}
 }
 
-variable "template_disk_sizes" {
+variable "disk_sizes" {
   description = "List of disk sizes to override for the template disks."
   type        = list(number)
   default     = null
