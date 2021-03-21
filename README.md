@@ -16,12 +16,13 @@ The common vSphere customiztions conflict with vApp deployments and are not used
 | Name | Version |
 |------|---------|
 | terraform | >= 0.13.4 |
+| vsphere | >= 1.25.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| vsphere | n/a |
+| vsphere | >= 1.25.0 |
 
 ## Modules
 
