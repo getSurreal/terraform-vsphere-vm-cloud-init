@@ -50,7 +50,7 @@ resource "vsphere_virtual_machine" "vm" {
     for_each = data.vsphere_virtual_machine.template.disks
     iterator = template_disks
     content {
-      label            = "disk${count.index}"
+      label            = "disk${template_disks.key}"
       size             = var.disk_sizes != null ? var.disk_sizes[template_disks.key] : data.vsphere_virtual_machine.template.disks[template_disks.key].size
       thin_provisioned = var.thin_provisioned ? var.thin_provisioned : data.vsphere_virtual_machine.template.disks[template_disks.key].thin_provisioned
       eagerly_scrub    = var.eagerly_scrub ? var.eagerly_scrub : data.vsphere_virtual_machine.template.disks[template_disks.key].eagerly_scrub
