@@ -10,6 +10,24 @@ This module is designed to work with the OVA versions of [Ubuntu Cloud Images](h
 
 The common vSphere customiztions conflict with vApp deployments and are not used.  vApp customiztions are used to pass configuration to the VM.
 
+## Additional Disks Example
+
+```hcl
+  additional_disks = {
+    disk1 = {
+      size_gb          = 10,
+      thin_provisioned = false,
+      eagerly_scrub    = true
+      datastore_id     = "datastore-20273"
+    },
+    disk2 = {
+      size_gb          = 10,
+      thin_provisioned = true,
+      eagerly_scrub    = true
+    }
+  }
+```
+
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
 
@@ -43,12 +61,15 @@ No Modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| additional\_disks | Disks to add in addition to the disks in the template. | `map(map(string))` | `{}` | no |
 | cluster | The name of the cluster to deploy this virtual machine to. | `string` | n/a | yes |
 | cpu\_hot\_add\_enabled | Allow CPUs to be added to this virtual machine while it is running. | `bool` | `null` | no |
 | cpu\_hot\_remove\_enabled | Allow CPUs to be removed to this virtual machine while it is running. | `bool` | `null` | no |
 | cpu\_reservation | The amount of CPU (in MHz) guaranteed for this virtual. | `number` | `null` | no |
 | datacenter | The name of the datacenter to deploy this virtual machine to. | `string` | n/a | yes |
 | datastore | The name of the datastore to deploy this virtual machine to. | `string` | n/a | yes |
+| disk\_sizes | List of disk sizes (in GB) to override for the template disks. | `list(number)` | `null` | no |
+| eagerly\_scrub | All allocated space for the vmdk is zeroed out.  If enabled, thin provisioned must be false. | `bool` | `false` | no |
 | memory | The amount of memory (in MB) for the virtual machine. | `number` | `4096` | no |
 | memory\_hot\_add\_enabled | Allow memory to be added to this virtual machine while it is running. | `bool` | `null` | no |
 | memory\_reservation | The amount of memory (in MB) guaranteed for this virtual machine. | `number` | `null` | no |
@@ -57,6 +78,7 @@ No Modules.
 | num\_cores\_per\_socket | The number of cores to distribute among the CPUs in this virtual machine. If specified, the value supplied to num\_cpus must be evenly divisible by this value. | `number` | `1` | no |
 | num\_cpus | The number of CPUs for this virtual machine. | `number` | `2` | no |
 | scsi\_type | Type of scsi controller. acceptable values lsilogic, pvscsi. | `string` | `""` | no |
+| thin\_provisioned | Space for the vmdk disk allocated as needed. | `bool` | `true` | no |
 | vapp\_properties | The network type for each network interface. | `any` | n/a | yes |
 | vm\_folder | The name of the folder for this virtual machine. | `string` | `""` | no |
 | vm\_name | The name of the virtual machine. | `string` | n/a | yes |
