@@ -99,7 +99,7 @@ variable "scsi_type" {
   default     = ""
 }
 
-variable "additinal_disks" {
+variable "additional_disks" {
   description = "Additional disks."
   type        = map(map(string))
   default     = {}
