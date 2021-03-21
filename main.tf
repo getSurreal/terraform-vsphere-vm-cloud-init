@@ -49,7 +49,7 @@ resource "vsphere_virtual_machine" "vm" {
     adapter_type = var.network_type != null ? var.network_type : data.vsphere_virtual_machine.template.network_interface_types[0]
   }
 
-  // Template disks
+  # Template disks
   dynamic "disk" {
     for_each = data.vsphere_virtual_machine.template.disks
     iterator = template_disks
@@ -61,7 +61,7 @@ resource "vsphere_virtual_machine" "vm" {
     }
   }
 
-  // Additional disks
+  # Additional disks
   dynamic "disk" {
     for_each = var.additional_disks
     iterator = additional_disks
