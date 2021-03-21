@@ -112,7 +112,7 @@ variable "eagerly_scrub" {
 }
 
 variable "disk_sizes" {
-  description = "List of disk sizes to override for the template disks."
+  description = "List of disk sizes (in GB) to override for the template disks."
   type        = list(number)
   default     = null
 }
