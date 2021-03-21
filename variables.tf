@@ -99,14 +99,26 @@ variable "scsi_type" {
   default     = ""
 }
 
-variable "additional_disks" {
-  description = "Additional disks."
-  type        = map(map(string))
-  default     = {}
+variable "thin_provisioned" {
+  description = "Space for the vmdk disk allocated as needed."
+  type        = bool
+  default     = true
+}
+
+variable "eagerly_scrub" {
+  description = "All allocated space for the vmdk is zeroed out.  If enabled, thin provisioned must be false."
+  type        = bool
+  default     = false
 }
 
 variable "disk_sizes" {
   description = "List of disk sizes to override for the template disks."
   type        = list(number)
   default     = null
+}
+
+variable "additional_disks" {
+  description = "Disks to add in addition to the disks in the template."
+  type        = map(map(string))
+  default     = {}
 }
