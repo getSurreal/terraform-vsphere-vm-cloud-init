@@ -67,7 +67,7 @@ resource "vsphere_virtual_machine" "vm" {
     iterator = additional_disks
     content {
       label            = additional_disks.key
-      unit_number      = lookup(additional_disks.value, "data_disk_scsi_controller", 0) ? additional_disks.value.data_disk_scsi_controller * 15 + index(keys(var.additional_disks), additional_disks.key) + (var.scsi_controller == tonumber(additional_disks.value["data_disk_scsi_controller"]) ? local.template_disk_count : 0) : index(keys(var.additional_disks), additional_disks.key) + local.template_disk_count
+      unit_number      = index(keys(var.additional_disks), additional_disks.key) + local.template_disk_count
       size             = lookup(additional_disks.value, "size_gb", null)
       thin_provisioned = lookup(additional_disks.value, "thin_provisioned", "true")
       eagerly_scrub    = lookup(additional_disks.value, "eagerly_scrub", "false")
