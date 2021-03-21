@@ -52,8 +52,8 @@ resource "vsphere_virtual_machine" "vm" {
     content {
       label            = "disk${count.index}"
       size             = var.disk_size_gb != null ? var.disk_size_gb[template_disks.key] : data.vsphere_virtual_machine.template.disks[template_disks.key].size
-      thin_provisioned = var.thin_provisoned ? var.thin_provisioned : data.vsphere_virtual_machine.template.disks[template_disks.key].thin_provisioned
-      eagerly_scrub    = var.eagerly_scrib ? var.eagerly_scrub : data.vsphere_virtual_machine.template.disks[template_disks.key].eagerly_scrub
+      thin_provisioned = var.thin_provisioned ? var.thin_provisioned : data.vsphere_virtual_machine.template.disks[template_disks.key].thin_provisioned
+      eagerly_scrub    = var.eagerly_scrub ? var.eagerly_scrub : data.vsphere_virtual_machine.template.disks[template_disks.key].eagerly_scrub
     }
   }
 
