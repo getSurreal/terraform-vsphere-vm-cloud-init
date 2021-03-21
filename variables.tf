@@ -47,16 +47,19 @@ variable "vm_folder" {
 
 variable "num_cpus" {
   description = "The number of CPUs for this virtual machine."
+  type        = number
   default     = 2
 }
 
 variable "cpu_reservation" {
   description = "The amount of CPU (in MHz) guaranteed for this virtual."
+  type        = number
   default     = null
 }
 
 variable "memory" {
   description = "The amount of memory (in MB) for the virtual machine."
+  type        = number
   default     = 4096
 }
 
@@ -86,6 +89,7 @@ variable "memory_hot_add_enabled" {
 
 variable "memory_reservation" {
   description = "The amount of memory (in MB) guaranteed for this virtual machine."
+  type        = number
   default     = null
 }
 

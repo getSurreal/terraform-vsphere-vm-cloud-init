@@ -46,12 +46,12 @@ No Modules.
 | cluster | The name of the cluster to deploy this virtual machine to. | `string` | n/a | yes |
 | cpu\_hot\_add\_enabled | Allow CPUs to be added to this virtual machine while it is running. | `bool` | `null` | no |
 | cpu\_hot\_remove\_enabled | Allow CPUs to be removed to this virtual machine while it is running. | `bool` | `null` | no |
-| cpu\_reservation | The amount of CPU (in MHz) guaranteed for this virtual. | `any` | `null` | no |
+| cpu\_reservation | The amount of CPU (in MHz) guaranteed for this virtual. | `number` | `null` | no |
 | datacenter | The name of the datacenter to deploy this virtual machine to. | `string` | n/a | yes |
 | datastore | The name of the datastore to deploy this virtual machine to. | `string` | n/a | yes |
 | memory | The amount of memory (in MB) for the virtual machine. | `number` | `4096` | no |
 | memory\_hot\_add\_enabled | Allow memory to be added to this virtual machine while it is running. | `bool` | `null` | no |
-| memory\_reservation | The amount of memory (in MB) guaranteed for this virtual machine. | `any` | `null` | no |
+| memory\_reservation | The amount of memory (in MB) guaranteed for this virtual machine. | `number` | `null` | no |
 | network | The name of the network to use for this virtual machine. | `string` | n/a | yes |
 | network\_type | The network type for each network interface. | `string` | `null` | no |
 | num\_cores\_per\_socket | The number of cores to distribute among the CPUs in this virtual machine. If specified, the value supplied to num\_cpus must be evenly divisible by this value. | `number` | `1` | no |
