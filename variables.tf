@@ -1,17 +1,21 @@
 variable "datacenter" {
   description = "The name of the datacenter to deploy this virtual machine to."
+  type        = string
 }
 
 variable "cluster" {
   description = "The name of the cluster to deploy this virtual machine to."
+  type        = string
 }
 
 variable "datastore" {
   description = "The name of the datastore to deploy this virtual machine to."
+  type        = string
 }
 
 variable "network" {
   description = "The name of the network to use for this virtual machine."
+  type        = string
 }
 
 variable "network_type" {
@@ -27,14 +31,18 @@ variable "vapp_properties" {
 
 variable "vm_template" {
   description = "The name of the template to cone."
+  type        = string
 }
 
 variable "vm_name" {
   description = "The name of the virtual machine."
+  type        = string
 }
 
 variable "vm_folder" {
   description = "The name of the folder for this virtual machine."
+  type        = string
+  default     = ""
 }
 
 variable "num_cpus" {
