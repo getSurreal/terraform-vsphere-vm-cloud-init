@@ -70,6 +70,7 @@ No Modules.
 | datastore | The name of the datastore to deploy this virtual machine to. | `string` | n/a | yes |
 | disk\_sizes | List of disk sizes (in GB) to override for the template disks. | `list(number)` | `null` | no |
 | eagerly\_scrub | All allocated space for the vmdk is zeroed out.  If enabled, thin provisioned must be false. | `bool` | `false` | no |
+| enable\_disk\_uuid | Expose the UUIDs of attached virtual disks to the virtual machine, allowing access to them in the guest. | `bool` | `true` | no |
 | memory | The amount of memory (in MB) for the virtual machine. | `number` | `4096` | no |
 | memory\_hot\_add\_enabled | Allow memory to be added to this virtual machine while it is running. | `bool` | `null` | no |
 | memory\_reservation | The amount of memory (in MB) guaranteed for this virtual machine. | `number` | `null` | no |
