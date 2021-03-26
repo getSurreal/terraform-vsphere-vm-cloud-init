@@ -99,6 +99,12 @@ variable "scsi_type" {
   default     = ""
 }
 
+variable "enable_disk_uuid" {
+  description = "Expose the UUIDs of attached virtual disks to the virtual machine, allowing access to them in the guest."
+  type        = bool
+  default     = true
+}
+
 variable "thin_provisioned" {
   description = "Space for the vmdk disk allocated as needed."
   type        = bool
