@@ -41,8 +41,9 @@ resource "vsphere_virtual_machine" "vm" {
   memory                 = var.memory
   memory_hot_add_enabled = var.memory_hot_add_enabled
 
-  guest_id  = data.vsphere_virtual_machine.template.guest_id
-  scsi_type = var.scsi_type != "" ? var.scsi_type : data.vsphere_virtual_machine.template.scsi_type
+  guest_id         = data.vsphere_virtual_machine.template.guest_id
+  scsi_type        = var.scsi_type != "" ? var.scsi_type : data.vsphere_virtual_machine.template.scsi_type
+  enable_disk_uuid = var.enable_disk_uuid
 
   network_interface {
     network_id   = data.vsphere_network.network.id
