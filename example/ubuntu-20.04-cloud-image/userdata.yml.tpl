@@ -27,7 +27,7 @@ write_files:
         ethernets:
           ens192:
             wakeonlan: true
-            dhcp4: true
+            dhcp4: false
             addresses:
               - ${vm_ip_address}/${vm_netmask}
             gateway4: ${vm_gateway}
@@ -37,5 +37,9 @@ write_files:
 
 runcmd:
   - export DEBIAN_FRONTEND=noninteractive
-  # This applies the static IP changes
+  - echo "reconfiguring network"
   - netplan apply
+  - echo "disabling floppy"
+  - rmmod floppy
+  - echo "blacklist floppy" | tee /etc/modprobe.d/blacklist-floppy.conf
+  - dpkg-reconfigure initramfs-tools
