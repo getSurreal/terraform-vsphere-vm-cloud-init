@@ -18,8 +18,21 @@ data "vsphere_network" "network" {
 }
 
 data "vsphere_virtual_machine" "template" {
+  count         = var.content_library == null ? 1 : 0
   name          = var.vm_template
   datacenter_id = data.vsphere_datacenter.dc.id
+}
+
+data "vsphere_content_library" "library" {
+  count      = var.content_library != null ? 1 : 0
+  name       = var.content_library
+}
+
+data "vsphere_content_library_item" "library_item_template" {
+  count      = var.content_library != null ? 1 : 0
+  library_id = data.vsphere_content_library.library.id
+  type       = "ovf"
+  name       = var.vm_template
 }
 
 locals {
@@ -81,7 +94,7 @@ resource "vsphere_virtual_machine" "vm" {
   }
 
   clone {
-    template_uuid = data.vsphere_virtual_machine.template.id
+    template_uuid = var.content_library == null ? data.vsphere_virtual_machine.template.id : data.vsphere_content_library_item.library_item_template.id
   }
 
   vapp {

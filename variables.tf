@@ -128,3 +128,9 @@ variable "additional_disks" {
   type        = map(map(string))
   default     = {}
 }
+
+variable "content_library" {
+  description = "Name of content library that contains the required template"
+  type        = "string"
+  default     = null
+}
