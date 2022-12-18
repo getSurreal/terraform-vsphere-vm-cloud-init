@@ -134,3 +134,9 @@ variable "content_library" {
   type        = "string"
   default     = null
 }
+
+variable "vmrp" {
+  description = "Name of an existing resource pool to place the VMs"
+  type        = "string"
+  default     = null
+}

@@ -35,13 +35,19 @@ data "vsphere_content_library_item" "library_item_template" {
   name       = var.vm_template
 }
 
+data "vsphere_resource_pool" "pool" {
+  count         = var.vmrp != null ? 1 : 0
+  name          = var.vmrp
+  datacenter_id = data.vsphere_datacenter.dc.id
+}
+
 locals {
   template_disk_count = length(data.vsphere_virtual_machine.template.disks)
 }
 
 resource "vsphere_virtual_machine" "vm" {
   name             = var.vm_name
-  resource_pool_id = data.vsphere_compute_cluster.cluster.resource_pool_id
+  resource_pool_id = var.vmrp != null ? data.vsphere_resource_pool.pool.id : data.vsphere_compute_cluster.cluster.resource_pool_id
   datastore_id     = data.vsphere_datastore.datastore.id
   folder           = var.vm_folder
 
