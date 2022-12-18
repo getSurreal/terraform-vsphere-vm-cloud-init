@@ -128,3 +128,15 @@ variable "additional_disks" {
   type        = map(map(string))
   default     = {}
 }
+
+variable "content_library" {
+  description = "Name of content library that contains the required template"
+  type        = string
+  default     = null
+}
+
+variable "vmrp" {
+  description = "Name of an existing resource pool to place the VMs"
+  type        = string
+  default     = null
+}
