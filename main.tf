@@ -26,6 +26,7 @@ data "vsphere_virtual_machine" "template" {
 data "vsphere_content_library" "library" {
   count      = var.content_library != null ? 1 : 0
   name       = var.content_library
+  depends_on = [var.tag_depends_on]
 }
 
 data "vsphere_content_library_item" "library_item_template" {
@@ -33,6 +34,7 @@ data "vsphere_content_library_item" "library_item_template" {
   library_id = data.vsphere_content_library.library.id[0]
   type       = "ovf"
   name       = var.vm_template
+  depends_on = [var.tag_depends_on]
 }
 
 data "vsphere_resource_pool" "pool" {
