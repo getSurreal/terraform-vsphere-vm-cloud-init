@@ -26,15 +26,13 @@ data "vsphere_virtual_machine" "template" {
 data "vsphere_content_library" "library" {
   count      = var.content_library != null ? 1 : 0
   name       = var.content_library
-  depends_on = [var.tag_depends_on]
 }
 
 data "vsphere_content_library_item" "library_item_template" {
   count      = var.content_library != null ? 1 : 0
-  library_id = data.vsphere_content_library.library.id[0]
+  library_id = data.vsphere_content_library.library[0].id
   type       = "ovf"
   name       = var.vm_template
-  depends_on = [var.tag_depends_on]
 }
 
 data "vsphere_resource_pool" "pool" {
@@ -44,12 +42,12 @@ data "vsphere_resource_pool" "pool" {
 }
 
 locals {
-  template_disk_count = length(data.vsphere_virtual_machine.template.disks[0])
+  template_disk_count = var.content_library == null ? length(data.vsphere_virtual_machine.template[0].disks) : 0
 }
 
 resource "vsphere_virtual_machine" "vm" {
   name             = var.vm_name
-  resource_pool_id = var.vmrp != null ? data.vsphere_resource_pool.pool.id : data.vsphere_compute_cluster.cluster.resource_pool_id
+  resource_pool_id = var.vmrp != null ? data.vsphere_resource_pool.pool[0].id : data.vsphere_compute_cluster.cluster.resource_pool_id
   datastore_id     = data.vsphere_datastore.datastore.id
   folder           = var.vm_folder
 
@@ -62,24 +60,35 @@ resource "vsphere_virtual_machine" "vm" {
   memory                 = var.memory
   memory_hot_add_enabled = var.memory_hot_add_enabled
 
-  guest_id         = data.vsphere_virtual_machine.template.guest_id
-  scsi_type        = var.scsi_type != "" ? var.scsi_type : data.vsphere_virtual_machine.template.scsi_type
+  guest_id         = var.content_library == null ? data.vsphere_virtual_machine.template[0].guest_id : null
+  scsi_type        = var.scsi_type != "" ? var.scsi_type : (var.content_library == null ? data.vsphere_virtual_machine.template[0].scsi_type : null)
   enable_disk_uuid = var.enable_disk_uuid
 
   network_interface {
     network_id   = data.vsphere_network.network.id
-    adapter_type = var.network_type != null ? var.network_type : data.vsphere_virtual_machine.template.network_interface_types[0]
+    adapter_type = var.network_type != null ? var.network_type : (var.content_library == null ? data.vsphere_virtual_machine.template[0].network_interface_types : null)
   }
 
   # Template disks
   dynamic "disk" {
-    for_each = data.vsphere_virtual_machine.template.disks
+    for_each = var.content_library == null ? data.vsphere_virtual_machine.template[0].disks : []
     iterator = template_disks
     content {
       label            = "disk${template_disks.key}"
-      size             = var.disk_sizes != null ? var.disk_sizes[template_disks.key] : data.vsphere_virtual_machine.template.disks[template_disks.key].size
-      thin_provisioned = var.thin_provisioned ? var.thin_provisioned : data.vsphere_virtual_machine.template.disks[template_disks.key].thin_provisioned
-      eagerly_scrub    = var.eagerly_scrub ? var.eagerly_scrub : data.vsphere_virtual_machine.template.disks[template_disks.key].eagerly_scrub
+      size             = var.disk_sizes != null ? var.disk_sizes[template_disks.key] : data.vsphere_virtual_machine.template[0].disks[template_disks.key].size
+      thin_provisioned = var.thin_provisioned ? var.thin_provisioned : data.vsphere_virtual_machine.template[0].disks[template_disks.key].thin_provisioned
+      eagerly_scrub    = var.eagerly_scrub ? var.eagerly_scrub : data.vsphere_virtual_machine.template[0].disks[template_disks.key].eagerly_scrub
+    }
+  }
+
+  dynamic "disk" {
+    for_each = var.content_library == null ? [] : [1]
+    iterator = template_disks
+    content {
+      label            = "disk${template_disks.key}"
+      size             = var.disk_sizes != null ? var.disk_sizes[template_disks.key] : data.vsphere_virtual_machine.template[0].disks[template_disks.key].size
+      //thin_provisioned = var.thin_provisioned ? var.thin_provisioned : data.vsphere_virtual_machine.template[0].disks[template_disks.key].thin_provisioned
+      //eagerly_scrub    = var.eagerly_scrub ? var.eagerly_scrub : data.vsphere_virtual_machine.template[0].disks[template_disks.key].eagerly_scrub
     }
   }
 
@@ -102,7 +111,7 @@ resource "vsphere_virtual_machine" "vm" {
   }
 
   clone {
-    template_uuid = var.content_library == null ? data.vsphere_virtual_machine.template.id : data.vsphere_content_library_item.library_item_template.id
+    template_uuid = var.content_library == null ? data.vsphere_virtual_machine.template[0].id : data.vsphere_content_library_item.library_item_template[0].id
   }
 
   vapp {
