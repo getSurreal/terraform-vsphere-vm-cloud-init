@@ -63,6 +63,8 @@ No Modules.
 |------|-------------|------|---------|:--------:|
 | additional\_disks | Disks to add in addition to the disks in the template. | `map(map(string))` | `{}` | no |
 | cluster | The name of the cluster to deploy this virtual machine to. | `string` | n/a | yes |
+| content_library | The name of content library that contains the required template. | `string ` | n/a | no |
+| vmrp | The name of an existing resource pool to place the VMs | `string ` | n/a | no |
 | cpu\_hot\_add\_enabled | Allow CPUs to be added to this virtual machine while it is running. | `bool` | `null` | no |
 | cpu\_hot\_remove\_enabled | Allow CPUs to be removed to this virtual machine while it is running. | `bool` | `null` | no |
 | cpu\_reservation | The amount of CPU (in MHz) guaranteed for this virtual. | `number` | `null` | no |
