@@ -30,7 +30,7 @@ data "vsphere_content_library" "library" {
 
 data "vsphere_content_library_item" "library_item_template" {
   count      = var.content_library != null ? 1 : 0
-  library_id = data.vsphere_content_library.library.id
+  library_id = data.vsphere_content_library.library.id[0]
   type       = "ovf"
   name       = var.vm_template
 }
@@ -42,7 +42,7 @@ data "vsphere_resource_pool" "pool" {
 }
 
 locals {
-  template_disk_count = length(data.vsphere_virtual_machine.template.disks)
+  template_disk_count = length(data.vsphere_virtual_machine.template.disks[0])
 }
 
 resource "vsphere_virtual_machine" "vm" {
